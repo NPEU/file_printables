@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+    <update>
+        <name>NPEU: file_printables</name>
+        <description>Joomla! file_printables file</description>
+        <element>file_printables</element>
+        <type>file</type>
+        <version>1.0.0</version>
+        <client>site</client>
+        <infourl title="NPEU: file_printables">https://github.com/NPEU/file_printables/releases/tag/v1.0.0</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/NPEU/file_printables/archive/v1.0.0.zip</downloadurl>
+        </downloads>
+        <targetplatform name="joomla" />
+        <tags>
+            <tag>stable</tag>
+        </tags>
+    </update>
+</updates>

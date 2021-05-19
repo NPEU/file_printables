@@ -1,0 +1,22 @@
+{
+    "name": "npeu/file_printables",
+    "description": "This file lists all the PHP packages required for the project.",
+    "type": "project",
+    "version": "1.0.0",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andy Kirk",
+            "email": "andy.kirk@npeu.ox.ac.uk"
+        }
+    ],
+    "require": {
+        "setasign/fpdi": "^2.3",
+        "tecnickcom/tcpdf": "^6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrintableService\\": "PrintableService"
+        }    
+    }
+}
