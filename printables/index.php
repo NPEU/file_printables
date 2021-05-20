@@ -7,6 +7,7 @@ if ($application_env == 'development') {
 	@define('DEV', true);
     ini_set('display_errors', 'on');
     error_reporting(-1);
+    $my_error_handler = set_error_handler(function() { return false; });
 } else {
 	@define('DEV', false);
 }
@@ -16,6 +17,8 @@ if ($application_env == 'testing') {
 } else {
 	@define('TEST', false);
 }
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 //session_start();
 
@@ -60,7 +63,7 @@ $dispatcher = JEventDispatcher::getInstance();
 $dispatcher->trigger('onAfterInitialise');
 
 $session = JFactory::getSession();
-$user = JFactory::getUser();
+$user    = JFactory::getUser();
 
 $authorised = false;
 
@@ -73,6 +76,8 @@ if (array_key_exists(10, $user->groups) || $user->authorise('core.admin')) {
 if (!$authorised) {
     die;
 }
+
+
 
 //
 
@@ -104,11 +109,7 @@ spl_autoload_register(function($class) {
     }
 );
 */
-
- 
-require_once __DIR__ . '/vendor/autoload.php';
-
-
+$my_error_handler = set_error_handler(function() { return false; });
 
 require_once 'server_vars.php';
 #require_once 'PrintableHelpers.php';
@@ -118,7 +119,8 @@ require_once '../detect_server.php';
 $classname = preg_replace('/[^a-z0-9-]/', '', $_SERVER['PATH_INFO']);
 $classname = ucwords(preg_replace('/-/', ' ', $classname));
 $classname = trim(preg_replace('/\s/', '', $classname), '/');
-echo "<pre>"; var_dump( $classname ); echo "</pre>"; #exit;
+$classname = '\\PrintableService\\' . $classname . '\\' . $classname;
+#echo "<pre>"; var_dump( $classname ); echo "</pre>"; #exit;
 
 /* LOG ---------------------------------*/
 /*
@@ -156,210 +158,15 @@ $log_db->exec($sql);
 */
 /*-------------------------------------*/
 #echo 'here'; exit;
+
 $service = new $classname();
-echo 'here'; exit;
+
 $r = $service->run();
-exit;
-if ($r) {
-    exit;
-} else {
-    //problem.
-    die;
+
+if (!$r) {
+   echo '<h1>Error</h1><p>Something wasn\'t right or went wrong - we couldn\'t complete that request.</p>';
 }
-
-
-/*$file_info = $service->run();
-
-if (is_array($file_info)) {
-    
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/pdf');
-    header('Content-Disposition: attachment; filename=' . $file_info['filename']) . '.pdf';
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($file_info['tmpname']));
-
-    ob_clean();
-    flush();
-    readfile($file_info['tmpname']);
-    
-    unlink($file_info['tmpname']);
-    
-    /*
-    $file = '/path/to/file/filename.pdf';
-    header('Content-Disposition: attachment; filename="'. basename($file) . '"');
-    header('Content-Length: ' . filesize($file));
-    readfile($file);
-    */
-    
-    /*
-    $jsonArray = json_decode( $_POST['json'], true );
-    $tmpName = tempnam(sys_get_temp_dir(), 'data');
-    $file = fopen($tmpName, 'w');
-
-    fputcsv($file, $jsonArray);
-    fclose($file);
-
-    header('Content-Description: File Transfer');
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename=data.csv');
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($tmpName));
-
-    ob_clean();
-    flush();
-    readfile($tmpName);
-
-    unlink($tmpName);
-    */
-#}
-
-
-
-
 
 exit;
 
-
-
-
-
-
-
-
-
-
-
-
-
-$post = isset($_POST['data']) ? $_POST['data'] : false;
-
-if (!$post) {
-    $post = !empty(file_get_contents('php://input')) ? file_get_contents('php://input') : false;
-}
-
-if ($post) {
-	$id = isset($_GET['id'])
-		? $_GET['id']
-		: false;
-	if (method_exists($service, 'saveData') && $msg = $service->saveData($post, $id)) {
-		echo $msg;
-		exit;
-	} else {
-		echo 'No save method for this data.';
-		exit;
-	}
-}
-
-$get = $_GET;
-
-$callback       = false;
-if (isset($get['callback'])) {
-	$callback = $get['callback'];
-	unset($get['callback']);
-}
-
-$collect        = false;
-if (isset($get['collect'])) {
-	$collect = $get['collect'];
-	unset($get['collect']);
-}
-
-$collect_order = false;
-/*if (isset($get['collect_order'])) {
-	$collect = $get['collect_order'];
-	unset($get['collect_order']);
-}*/
-
-$helpers_only = false;
-if (isset($get['helpers_only']) && $get['helpers_only'] == '1') {
-    $helpers_only = true;
-    unset($get['helpers_only']);
-}
-
-#echo "<pre>\n"; var_dump($helpers_only); echo "</pre>\n"; exit;
-
-$data = array();
-if (!$helpers_only) {
-    $service->run($get);
-    $data = $service->getData();
-}
-
-if ($collect) {
-	$collect = explode('_', $collect);
-	$collect_field = $collect[0];
-	if (isset($collect[1])) {
-		$collect_order = $collect[1];
-	}
-	$collect_method = 'getCollectedBy' . ucfirst(strtolower($collect_field));
-	if (method_exists($service, $collect_method)) {
-		$data = $service->$collect_method($data, $collect_order);
-	}
-}
-
-$helpers = false;
-if (isset($get['helpers'])) {
-    $helpers = $get['helpers'];
-    unset($get['helpers']);
-}
-
-#echo "<pre>\n"; var_dump($helpers); echo "</pre>\n"; exit;
-if ($helpers) {
-	/*$collect = explode('_', $collect);
-	$collect_field = $collect[0];
-	if (isset($collect[1])) {
-		$collect_order = $collect[1];
-	}*/
-    
-    $helpers_list = explode(',', $helpers);
-    $n_helpers = count($helpers_list);
-    
-    foreach($helpers_list as $helper) {
-        $helper_order = false;
-        $helper = explode('_', $helper);
-        $helper_name = $helper[0];
-        if (isset($helper[1])) {
-            $helper_order = $helper[1];
-        }
-        
-        $helper_method = 'getHelper' . ucfirst(strtolower($helper_name));
-        if (method_exists($service, $helper_method)) {
-            $helper_data = $service->$helper_method($helper_order);
-            if ($helpers_only) {
-                if ($n_helpers > 1) {
-                    $data[$helper_name] = $helper_data;
-                } else {
-                    $data = $helper_data;
-                }
-            } else {
-                $data['helpers'][$helper_name] = $helper_data;
-            }
-        }
-    }
-}
-
-#echo "<pre>\n"; var_dump($data); echo "</pre>\n"; exit;
-$json = json_encode($data);
-
-header('Access-Control-Allow-Origin: *');
-
-if ($callback) {
-	header('Content-type: text/javascipt');
-	#header('Content-Type: text/javascript; charset=utf8');
-	#header('Access-Control-Max-Age: 3628800');
-	#header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-
-	echo $callback . '(' . $json . ')';
-	exit;
-}
-
-header('Content-type: application/json');
-#header('Content-type: text/plain');
-echo $json;
-exit;
 ?>
