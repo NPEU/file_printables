@@ -1,10 +1,10 @@
 <?php
-namespace PrintableService\OfficeCards;
+namespace PrintableService\DoorPlates;
 
 /**
- * OfficeCards
+ * DoorPlates
  *
- * Generate a PDF of Office Cards (name labels) for all rooms, or an individual room if param given.
+ * Generate a PDF of Door Plates (name labels) for all rooms, or an individual room if param given.
  *
  * @package PrintableService
  * @author akirk
@@ -15,7 +15,7 @@ namespace PrintableService\OfficeCards;
 
 use setasign\Fpdi\Tcpdf\Fpdi;
 
-class OfficeCards extends \PrintableService\PrintableService
+class DoorPlates extends \PrintableService\PrintableService
 {
     protected $param_defs = [
         'room' => '#^l(0|1)-\d\d$#'
@@ -58,7 +58,7 @@ class OfficeCards extends \PrintableService\PrintableService
         ksort($room_to_names);
         #echo '<pre>'; var_dump($room_to_names); echo '</pre>'; exit;
 
-        $filemame = 'NPEU Office Labels.pdf';
+        $filemame = 'NPEU Door Plates.pdf';
 
         $line_height  = 10;
         $page_width   = 145;
@@ -84,7 +84,7 @@ class OfficeCards extends \PrintableService\PrintableService
         $pdf->SetFont('lato', '', 20);
         $pdf->setFontSubsetting(false);
 
-        $pdf->setSourceFile(__DIR__ . "/office_label_template.pdf");
+        $pdf->setSourceFile(__DIR__ . "/door_plate_template.pdf");
         $tpl_idx = $pdf->importPage(1);
 
 
