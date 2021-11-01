@@ -43,7 +43,7 @@ class SignInSheet extends \PrintableService\PrintableService
 
         $filemame = 'NPEU Sign-in Sheet.pdf';
 
-        $line_height  = 14.5; //pt
+        $line_height  = 13.9; //pt
         $page_width   = 210; //mm
         $page_height  = 297; //mm
         $block_margin = 10; //mm
@@ -53,7 +53,7 @@ class SignInSheet extends \PrintableService\PrintableService
         $border_width = 0.5; //pt
         $cell_padding = 2.3; //pt
 
-        $top = 28;
+        $top = 36;
 
 
         $pdf = new Fpdi('P','mm', array($page_width, $page_height));
@@ -70,7 +70,7 @@ class SignInSheet extends \PrintableService\PrintableService
 
         $pdf->SetTextColor(0, 0, 0);
         #$pdf->SetFont('arial', '', 10);
-        $pdf->SetFont('lato', '', 10);
+        $pdf->SetFont('lato', '', 9);
         $pdf->setFontSubsetting(false);
 
         $pdf->setSourceFile(__DIR__ . "/sign_in_sheet_template.pdf");

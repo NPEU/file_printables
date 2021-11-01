@@ -169,7 +169,7 @@ class OfficeMap extends \PrintableService\PrintableService
 
         $pdf->SetTextColor(0, 0, 0);
         #$pdf->SetFont('arial', '', 10);
-        $pdf->SetFont('lato', '', 10);
+        $pdf->SetFont('lato', '', 9);
         $pdf->setFontSubsetting(false);
 
         $pdf->setSourceFile(__DIR__ . "/office_map_template.pdf");
@@ -189,7 +189,7 @@ class OfficeMap extends \PrintableService\PrintableService
         // Add the SVG as an image:
         
         $svg_x = ($page_width - $svg_width_mm) / 2;
-        $svg_y = 22;
+        $svg_y = 30;
         // $x='', $y='', $w=0, $h=0, $link='', $align='', $palign='', $border=0, $fitonpage=false
         $pdf->ImageSVG($tmpfile_path, $svg_x, $svg_y, '', '', '',   '', '', 0, false);
 

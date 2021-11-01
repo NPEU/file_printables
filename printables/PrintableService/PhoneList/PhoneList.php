@@ -32,15 +32,11 @@ class PhoneList extends \PrintableService\PrintableService
 
         // This may come from elsewhere in the future:
         $useful_numbers = [
-            "Conference Phone (JK’s Office)"  => "(2) 89742",
             "First Floor Meeting Room"        => "(6) 17777",
             "Ground Floor Meeting Room"       => "(2) 89734",
-            "MBRRACE Conferences"             => "(2) 89747",
             "MBRRACE Office"                  => "(2) 89715",
             "Miles Beaumont (NDPH Accounts)"  => "(7) 43551",
             "NDPH IT Hub (IT support)"        => "(7) 43813",
-            "NDPH Post Room (L1)"             => "(9) 743646",
-            "NPEU Fax"                        => "(2) 89701",
             "NPEU Reception"                  => "(2) 89700",
             "Richard Doll Building Reception" => "(9) 743660",
             "Security"                        => "(2) 72944",
@@ -71,7 +67,7 @@ class PhoneList extends \PrintableService\PrintableService
         $border_width = 0.5; //pt
         $cell_padding = 1.8; //pt
 
-        $top = 28;
+        $top = 36;
 
 
         $pdf = new Fpdi('P','mm', array($page_width, $page_height));

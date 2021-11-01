@@ -43,7 +43,7 @@ class CirculationList extends \PrintableService\PrintableService
 
         $filemame = 'NPEU Circulation List.pdf';
 
-        $line_height  = 11; //pt
+        $line_height  = 10; //pt
         $page_width   = 210; //mm
         $page_height  = 297; //mm
         $block_margin = 10; //mm
@@ -53,7 +53,7 @@ class CirculationList extends \PrintableService\PrintableService
         $border_width = 0.5; //pt
         $cell_padding = 1.8; //pt
 
-        $top = 28;
+        $top = 36;
 
 
         $pdf = new Fpdi('P','mm', array($page_width, $page_height));
@@ -70,7 +70,7 @@ class CirculationList extends \PrintableService\PrintableService
 
         $pdf->SetTextColor(0, 0, 0);
         #$pdf->SetFont('arial', '', 10);
-        $pdf->SetFont('lato', '', 10);
+        $pdf->SetFont('lato', '', 9);
         $pdf->setFontSubsetting(false);
 
         $pdf->setSourceFile(__DIR__ . "/circulation_list_template.pdf");
