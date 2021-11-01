@@ -39,7 +39,7 @@ class CirculationList extends \PrintableService\PrintableService
         $staff_members = $this->getStaffData();
         #echo '<pre>'; var_dump($staff_members); echo '</pre>'; exit;
 
-        $row_split = 38;
+        $row_split = ceil(count($staff_members) / 2);
 
         $filemame = 'NPEU Circulation List.pdf';
 
@@ -51,7 +51,7 @@ class CirculationList extends \PrintableService\PrintableService
         $block_width  = 92; //mm
 
         $border_width = 0.5; //pt
-        $cell_padding = 1.8; //pt
+        $cell_padding = 1.4; //pt
 
         $top = 36;
 

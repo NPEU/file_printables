@@ -39,11 +39,11 @@ class SignInSheet extends \PrintableService\PrintableService
         $staff_members = $this->getStaffData();
         #echo '<pre>'; var_dump($staff_members); echo '</pre>'; exit;
 
-        $row_split = 38;
+        $row_split = ceil(count($staff_members) / 2);
 
         $filemame = 'NPEU Sign-in Sheet.pdf';
 
-        $line_height  = 13.9; //pt
+        $line_height  = 12; //pt
         $page_width   = 210; //mm
         $page_height  = 297; //mm
         $block_margin = 10; //mm
@@ -51,7 +51,7 @@ class SignInSheet extends \PrintableService\PrintableService
         $block_width  = 92; //mm
 
         $border_width = 0.5; //pt
-        $cell_padding = 2.3; //pt
+        $cell_padding = 2.2; //pt
 
         $top = 36;
 
