@@ -52,20 +52,20 @@ class PhoneList extends \PrintableService\PrintableService
         #echo '<pre>'; var_dump($room); echo '</pre>'; exit;
         $staff_members = $this->getStaffData();
         #echo '<pre>'; var_dump($staff_members); echo '</pre>'; exit;
-        
-        $row_split = 46;
+
+        $row_split = 48;
 
         $filemame = 'NPEU Phone List.pdf';
 
-        $line_height  = 11; //pt
+        $line_height  = 10.5; //pt
         $page_width   = 210; //mm
         $page_height  = 297; //mm
         $block_margin = 10; //mm
         $block_gutter = 6; //mm
         $block_width  = 92; //mm
-        
+
         $border_width = 0.5; //pt
-        $cell_padding = 1.8; //pt
+        $cell_padding = 1.6; //pt
 
         $top = 36;
 
@@ -162,15 +162,15 @@ class PhoneList extends \PrintableService\PrintableService
         $html4 = '<h2 style="margin: 0; padding: 0; font-size: 16pt; line-height: ' . ($line_height / 2) . 'mm;">Useful numbers</h2>';
 
         $pdf->writeHTMLCell(0, 0, $left, ($b_top - 10), $html4, 0, 1, 0, true, '', true);
-        
-        
+
+
         // Date stamp:
         $date_y = $page_height - $block_margin;
         $pdf->SetFontSize(9);
         $pdf->SetTextColor(50);
         // $x, $y, $txt, $fstroke=false, $fclip=false, $ffill=true, $border=0, $ln=0, $align='', $fill=false, $link='', $stretch=0, $ignore_min_height=false, $calign='T', $valign='M', $rtloff=false
         $pdf->Text('', $date_y, 'Generated: ' . date('d M Y'), false, false, true, 0, 0, 'R');
-        
+
 
         $pdf->Output($filemame, 'I');
 
