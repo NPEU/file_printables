@@ -31,7 +31,7 @@ class OfficeMap extends \PrintableService\PrintableService
         #echo '<pre>'; var_dump($db); echo '</pre>'; exit;
 
         // Create the select statement.
-        $q = 'SELECT params FROM #__modules WHERE id = 511;';
+        /*$q = 'SELECT params FROM #__modules WHERE id = 511;';
 
         $db->setQuery($q);
         if (!$db->execute($q)) {
@@ -44,7 +44,17 @@ class OfficeMap extends \PrintableService\PrintableService
         $params = \Joomla\Registry\Registry::getInstance('');
         $params->loadString($mod_params);
 
-        $svg = trim($params->get('svg'));
+        $svg = trim($params->get('svg'));*/
+
+        $q = 'SELECT content FROM #__modules WHERE id = 511;';
+
+        $db->setQuery($q);
+        if (!$db->execute($q)) {
+            JError::raiseError( 500, $db->stderr() );
+            return false;
+        }
+
+        $svg = trim($db->loadResult());
 
         $staff_members = $this->getStaffData();
 
@@ -178,7 +188,7 @@ class OfficeMap extends \PrintableService\PrintableService
         $pdf->addPage();
         $pdf->useTemplate($tpl_idx, 0, 0);
 
-        
+
         $tmpfile = tmpfile();
         fwrite($tmpfile, $svg);
         $tmpfile_path = stream_get_meta_data($tmpfile)['uri'];
@@ -187,7 +197,7 @@ class OfficeMap extends \PrintableService\PrintableService
         #echo file_get_contents($tmpfile_path); exit;
 
         // Add the SVG as an image:
-        
+
         $svg_x = ($page_width - $svg_width_mm) / 2;
         $svg_y = 30;
         // $x='', $y='', $w=0, $h=0, $link='', $align='', $palign='', $border=0, $fitonpage=false
@@ -203,10 +213,10 @@ class OfficeMap extends \PrintableService\PrintableService
 
 
         $pdf->Output($filemame, 'I');
-        
+
         fclose($temp); // this removes the file
-        
-        
+
+
         return true;
 	}
 }
