@@ -18,19 +18,11 @@ use setasign\Fpdi\Tcpdf\Fpdi;
 class OfficeMap extends \PrintableService\PrintableService
 {
 
-	/*=public function __construct()
-	{
-		parent::__construct();
-
-	}*/
-
 	public function run()
 	{
         $db = \JFactory::getDbo();
 
-        #echo '<pre>'; var_dump($db); echo '</pre>'; exit;
-
-        // Create the select statement.
+        // Get the params (not currently needed).
         /*$q = 'SELECT params FROM #__modules WHERE id = 511;';
 
         $db->setQuery($q);
@@ -75,8 +67,6 @@ class OfficeMap extends \PrintableService\PrintableService
             }
             $first_names[$first_name]++;
 
-
-
             $lastname = trim($staff['last_name']);
             $t = str_replace(' ', '-', $lastname);
 
@@ -103,8 +93,6 @@ class OfficeMap extends \PrintableService\PrintableService
                 $staff_members[$k]['avatar'] = '/assets/images/avatars/_none.jpg';
             }
 
-
-
             $room = empty($staff['room']) ? 'unassigned' : $staff['room'];
             if (!array_key_exists($room, $rooms)) {
                 $rooms[$room] = [];
@@ -112,11 +100,11 @@ class OfficeMap extends \PrintableService\PrintableService
             $rooms[$room][] = $k;
             $room_to_names[$room][] = $staff['name'];
         }
-        #echo '<pre>'; var_dump($staff_members); echo '</pre>'; exit;
-        #echo '<pre>'; var_dump($room_to_names); echo '</pre>'; exit;
+
         // 2nd pass to add the <tspan> elements to the svg:
 
         foreach ($rooms as $room => $keys) {
+
             $s = '';
             $y = 0;
             foreach ($keys as $k) {
@@ -132,11 +120,11 @@ class OfficeMap extends \PrintableService\PrintableService
                     }
                 }
 
-                $s .= '<a href="#' . $staff_member['alias'] . '"><tspan x="0" y="' . $y . '" class="st12 st5 st13">' . $name . '</tspan></a>';
+                $s .= '<tspan x="0" y="' . $y . '" class="st12 st5 st13">' . $name . '</tspan>' . "\n";
                 $y += 7.8;
             }
 
-            $svg = str_replace($room, $s, $svg);
+            $svg = str_replace('{' . $room . '}', $s, $svg);
         }
 
         // We need to fiddle with the SVG to make it suitable for print:
@@ -148,7 +136,6 @@ class OfficeMap extends \PrintableService\PrintableService
         $svg_height_mm = $svg_height * 0.352778;
 
         $svg = str_replace($matches[0], $matches[0] . ' width="' . $svg_width . 'px"', $svg);
-        #echo '<pre>'; var_dump($viewbox); echo '</pre>'; exit;
 
         $filemame = 'NPEU Office Map.pdf';
 
@@ -193,8 +180,7 @@ class OfficeMap extends \PrintableService\PrintableService
         fwrite($tmpfile, $svg);
         $tmpfile_path = stream_get_meta_data($tmpfile)['uri'];
         #fseek($temp, 0);
-        #echo fread($temp, 1024);
-        #echo file_get_contents($tmpfile_path); exit;
+
 
         // Add the SVG as an image:
 
