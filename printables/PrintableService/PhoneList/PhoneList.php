@@ -53,21 +53,22 @@ class PhoneList extends \PrintableService\PrintableService
         $staff_members = $this->getStaffData();
         #echo '<pre>'; var_dump($staff_members); echo '</pre>'; exit;
 
-        $row_split = 48;
+        $row_split = 53;
 
         $filemame = 'NPEU Phone List.pdf';
 
+        $font_size  =   8; //pt
         $line_height  = 10.5; //pt
         $page_width   = 210; //mm
         $page_height  = 297; //mm
-        $block_margin = 10; //mm
+        $block_margin = 8; //mm
         $block_gutter = 6; //mm
         $block_width  = 92; //mm
 
         $border_width = 0.5; //pt
-        $cell_padding = 1.6; //pt
+        $cell_padding = 1.5; //pt
 
-        $top = 36;
+        $top = 34;
 
 
         $pdf = new Fpdi('P','mm', array($page_width, $page_height));
@@ -94,9 +95,9 @@ class PhoneList extends \PrintableService\PrintableService
         $pdf->useTemplate($tpl_idx, 0, 0);
 
 
-        $head = '<table border="' . $border_width . 'pt" cellspacing="0" cellpadding="' . $cell_padding .'pt" width="' . $block_width . 'mm" style="line-height: ' . $line_height . 'pt;">';
+        $head = '<table border="' . $border_width . 'pt" cellspacing="0" cellpadding="' . $cell_padding .'pt" width="' . $block_width . 'mm" style="font-size: ' . $font_size . '; line-height: ' . $line_height . 'pt;">';
         $tail = '</table>';
-        $row  = '<tr><td width="27mm" style="text-indent: 4pt;">%s</td><td width="38mm"><b style="font-family: latob;" style="text-indent: 4pt;">%s</b></td><td width="27mm" style="text-indent: 4pt;">%s</td></tr>';
+        $row  = '<tr><td width="30mm" style="text-indent: 4pt;">%s</td><td width="38mm"><b style="font-family: latob;" style="text-indent: 4pt;">%s</b></td><td width="24mm" style="text-indent: 4pt;">%s</td></tr>';
 
         list($numbers1, $numbers2) = array_chunk($staff_members, $row_split);
         //list($numbers1, $numbers2) = array_chunk($staff_members, ceil(count($array) / 2));
@@ -145,7 +146,7 @@ class PhoneList extends \PrintableService\PrintableService
         $html3 = $head;
         foreach ($useful_numbers as $name => $number) {
 
-            $html3 .= '<tr><td width="65mm" style="text-indent: 4pt;"><b style="font-family: latob;">' . $name . '</b></td><td width="27mm" style="text-indent: 4pt;">' . $number . '</td></tr>';
+            $html3 .= '<tr><td width="68mm" style="text-indent: 4pt;"><b style="font-family: latob;">' . $name . '</b></td><td width="24mm" style="text-indent: 4pt;">' . $number . '</td></tr>';
         }
         $html3 .= $tail;
 
