@@ -4,18 +4,19 @@
 #echo "<pre>\n"; var_dump($_COOKIE); echo "</pre>\n";
 $application_env = $_SERVER['SERVER_NAME'] == 'dev.npeu.ox.ac.uk' ? 'development' : ($_SERVER['SERVER_NAME'] == 'test.npeu.ox.ac.uk' ? 'testing' : 'production');
 if ($application_env == 'development') {
-	@define('DEV', true);
-    ini_set('display_errors', 'on');
+    @define('DEV', true);
+    ini_set('display_errors', 'off');
+    #ini_set('display_errors', 'on');
     error_reporting(-1);
     $my_error_handler = set_error_handler(function() { return false; });
 } else {
-	@define('DEV', false);
+    @define('DEV', false);
 }
 
 if ($application_env == 'testing') {
-	@define('TEST', true);
+    @define('TEST', true);
 } else {
-	@define('TEST', false);
+    @define('TEST', false);
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -40,14 +41,14 @@ if (DEV) {
     define( 'JPATH_BASE', BASE_PATH . 'jan_dev' . DS .'public' );
     define( 'TOP_DOMAIN', 'https://dev.npeu.ox.ac.uk' );
     define( 'JDB', 'jan_dev' );
-} elseif (TEST) {	
+} elseif (TEST) {
     define( 'JPATH_BASE', BASE_PATH . 'jan_test' . DS .'public' );
     define( 'TOP_DOMAIN', 'https://test.npeu.ox.ac.uk' );
-    define( 'JDB', 'jan_test' );	
-} else {	
+    define( 'JDB', 'jan_test' );
+} else {
     define( 'JPATH_BASE', BASE_PATH . 'jan' . DS .'public' );
     define( 'TOP_DOMAIN', 'https://www.npeu.ox.ac.uk' );
-    define( 'JDB', 'jan' );	
+    define( 'JDB', 'jan' );
 }
 #echo "<pre>"; var_dump( DEV ); echo "</pre>"; exit;
 
@@ -96,14 +97,14 @@ exit;
 //
 
 if (!defined('DS')) {
-	define('DS', DIRECTORY_SEPARATOR);
+    define('DS', DIRECTORY_SEPARATOR);
 }
 /*
 set_include_path(implode(PATH_SEPARATOR, array(
     __DIR__,
-	'PrintableService',
-	get_include_path(),
-	)));
+    'PrintableService',
+    get_include_path(),
+    )));
 spl_autoload_register(function($class) {
         @include str_replace('_', '/', $class) . '.php';
     }
@@ -138,7 +139,7 @@ $log_username = NPEU_DATABASE_USR;
 $log_password = NPEU_DATABASE_PWD;
 
 $log_db = new PDO("mysql:host=$log_host;dbname=$log_database", $log_username, $log_password, array(
-	PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8;'
+    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8;'
 ));
 
 $date           = $log_db->quote(date('c'));
@@ -153,7 +154,7 @@ $post_body      = isset($_POST) ? $log_db->quote(file_get_contents('php://input'
 #echo "Body<pre>"; var_dump( $post_body ); echo "</pre>"; exit;
 
 $sql = "INSERT INTO `log` (`date`,`timestamp`,`user_agent`,`remote_address`,`request_uri`,`request_method`,`post_data`,`post_body`) "
-	 . "VALUES ($date,$timestamp,$user_agent,$remote_address,$request_uri,$request_method,$post_data,$post_body);";
+     . "VALUES ($date,$timestamp,$user_agent,$remote_address,$request_uri,$request_method,$post_data,$post_body);";
 $log_db->exec($sql);
 */
 /*-------------------------------------*/
