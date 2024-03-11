@@ -11,7 +11,7 @@ namespace PrintableService;
  * @version 0.1
 
  **/
- 
+
 #require_once __DIR__ . '/vendor/autoload.php';
 
 class PrintableService
@@ -20,8 +20,8 @@ class PrintableService
     protected $valid_params = [];
     protected $param_defs = [];
 
-	public function __construct()
-	{
+    public function __construct()
+    {
         if (!empty($this->param_defs)) {
             foreach ($this->param_defs as $name => $pattern) {
                 if (array_key_exists($name, $_GET)) {
@@ -31,18 +31,18 @@ class PrintableService
                 }
             }
         }
-	}
+    }
 
-	/*public function init()
-	{
-		return true;
-	}*/
-    
+    /*public function init()
+    {
+        return true;
+    }*/
+
     public function run()
-	{
+    {
 
-	}
-    
+    }
+
     protected function getStaffData() {
         $db = \JFactory::getDbo();
 
@@ -56,12 +56,12 @@ class PrintableService
             JError::raiseError( 500, $db->stderr() );
             return false;
         }
-        
+
         return $db->loadAssocList();
     }
-    
+
     protected function getStaffQuery() {
-        
+
         $q  = 'SELECT u.id, u.name, u.email, up1.profile_value AS first_name, up2.profile_value AS last_name, up3.profile_value AS tel, up4.profile_value AS room, up5.profile_value AS alias, up6.profile_value AS avatar , up7.profile_value AS role ';
         $q .= 'FROM `#__users` u ';
         $q .= 'JOIN `#__user_usergroup_map` ugm ON u.id = ugm.user_id ';
@@ -76,7 +76,7 @@ class PrintableService
         $q .= 'WHERE ug.title = "Staff" ';
         $q .= 'AND u.block = 0 ';
         $q .= 'ORDER BY last_name, first_name;';
-        
+
         return $q;
     }
 }
