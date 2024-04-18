@@ -21,14 +21,14 @@ class SignInSheet extends \PrintableService\PrintableService
         'room' => '#^l(0|1)-\d\d$#'
     ];*/
 
-	/*=public function __construct()
-	{
-		parent::__construct();
+    /*=public function __construct()
+    {
+        parent::__construct();
 
-	}*/
+    }*/
 
-	public function run()
-	{
+    public function run()
+    {
 
         /*$single_room = false;
         if (!empty($this->valid_params['room'])) {
@@ -43,15 +43,17 @@ class SignInSheet extends \PrintableService\PrintableService
 
         $filemame = 'NPEU Sign-in Sheet.pdf';
 
-        $line_height  = 12; //pt
+        $font_size  =   7; //pt
+        $line_height  = 10; //pt
         $page_width   = 210; //mm
         $page_height  = 297; //mm
-        $block_margin = 10; //mm
-        $block_gutter = 6; //mm
-        $block_width  = 92; //mm
+        $block_margin = 7; //mm
+        $block_gutter = 3; //mm
+        $block_width  = 95; //mm
 
         $border_width = 0.5; //pt
-        $cell_padding = 2.2; //pt
+        $cell_spacing = 3; //pt
+        $cell_padding = 0.3; //pt
 
         $top = 36;
 
@@ -80,11 +82,11 @@ class SignInSheet extends \PrintableService\PrintableService
         $pdf->useTemplate($tpl_idx, 0, 0);
 
 
-        $head = '<table border="0" cellspacing="0" cellpadding="' . $cell_padding .'pt" width="' . $block_width . 'mm" style="line-height: ' . $line_height . 'pt;">';
+        $head = '<table border="0" cellspacing="' . $cell_spacing . '" cellpadding="' . $cell_padding .'pt" width="' . $block_width . 'mm" style="font-size: ' . $font_size . '; line-height: ' . $line_height . 'pt;">';
         $tail = '</table>';
-        $row  = '<tr style="background-color: #%s;"><td width="23mm">&nbsp;%s</td><td width="38mm"><b style="font-family: latob;">&nbsp;%s</b></td><td width="29mm">___________________</td></tr>';
-        //<hr height="1px" fgcolor="#333" style="cap: square; join: miter; dash: 0; phase: 0;" />
-        
+        $row  = '<tr style="background-color: #%s;"><td width="23mm">&nbsp;%s</td><td width="38mm"><b style="font-family: latob;">&nbsp;%s</b></td><td width="29mm">_____________________________</td></tr>';
+        //<hr height="1px" fgcolor="#333" style="cap: square; join: miter; dash: 0; phase: 0;" />__
+
         list($col1, $col2) = array_chunk($staff_members, $row_split);
         //list($col1, $col2) = array_chunk($staff_members, ceil(count($array) / 2));
 
@@ -140,5 +142,5 @@ class SignInSheet extends \PrintableService\PrintableService
         $pdf->Output($filemame, 'I');
 
         return true;
-	}
+    }
 }

@@ -21,14 +21,14 @@ class PhoneList extends \PrintableService\PrintableService
         'room' => '#^l(0|1)-\d\d$#'
     ];*/
 
-	/*=public function __construct()
-	{
-		parent::__construct();
+    /*=public function __construct()
+    {
+        parent::__construct();
 
-	}*/
+    }*/
 
-	public function run()
-	{
+    public function run()
+    {
 
         // This may come from elsewhere in the future:
         $useful_numbers = [
@@ -57,7 +57,7 @@ class PhoneList extends \PrintableService\PrintableService
 
         $filemame = 'NPEU Phone List.pdf';
 
-        $font_size  =   8; //pt
+        $font_size  =   7; //pt
         $line_height  = 10.5; //pt
         $page_width   = 210; //mm
         $page_height  = 297; //mm
@@ -66,7 +66,7 @@ class PhoneList extends \PrintableService\PrintableService
         $block_width  = 92; //mm
 
         $border_width = 0.5; //pt
-        $cell_padding = 1.5; //pt
+        $cell_padding = 1.1; //pt
 
         $top = 34;
 
@@ -176,5 +176,5 @@ class PhoneList extends \PrintableService\PrintableService
         $pdf->Output($filemame, 'I');
 
         return true;
-	}
+    }
 }

@@ -21,14 +21,14 @@ class CirculationList extends \PrintableService\PrintableService
         'room' => '#^l(0|1)-\d\d$#'
     ];*/
 
-	/*=public function __construct()
-	{
-		parent::__construct();
+    /*=public function __construct()
+    {
+        parent::__construct();
 
-	}*/
+    }*/
 
-	public function run()
-	{
+    public function run()
+    {
 
         /*$single_room = false;
         if (!empty($this->valid_params['room'])) {
@@ -43,15 +43,17 @@ class CirculationList extends \PrintableService\PrintableService
 
         $filemame = 'NPEU Circulation List.pdf';
 
+        $font_size  =   8; //pt
         $line_height  = 10; //pt
         $page_width   = 210; //mm
         $page_height  = 297; //mm
-        $block_margin = 10; //mm
-        $block_gutter = 6; //mm
-        $block_width  = 92; //mm
+        $block_margin = 7; //mm
+        $block_gutter = 3; //mm
+        $block_width  = 100; //mm
 
         $border_width = 0.5; //pt
-        $cell_padding = 1.4; //pt
+        $cell_spacing = 4; //pt
+        $cell_padding = 0.3; //pt
 
         $top = 36;
 
@@ -80,9 +82,9 @@ class CirculationList extends \PrintableService\PrintableService
         $pdf->useTemplate($tpl_idx, 0, 0);
 
 
-        $head = '<table border="0" cellspacing="4" cellpadding="' . $cell_padding .'pt" width="' . $block_width . 'mm" style="line-height: ' . $line_height . 'pt;">';
+        $head = '<table border="0" cellspacing="' . $cell_spacing . '" cellpadding="' . $cell_padding .'pt" width="' . $block_width . 'mm" style="font-size: ' . $font_size . '; line-height: ' . $line_height . 'pt;">';
         $tail = '</table>';
-        $row  = '<tr style="background-color: #%s;"><td style="background-color: #fff;" width="' . ($line_height + ($cell_padding * 2)) . 'pt" border="' . $border_width . 'pt">&nbsp;</td><td width="27mm">&nbsp;%s</td><td width="38mm"><b style="font-family: latob;">&nbsp;%s</b></td></tr>';
+        $row  = '<tr style="background-color: #%s;"><td style="background-color: #fff;" width="' . ($line_height + ($cell_padding * 2)) . 'pt" border="' . $border_width . 'pt">&nbsp;</td><td width="30mm">&nbsp;%s</td><td width="50mm"><b style="font-family: latob;">&nbsp;%s</b></td></tr>';
 
         list($col1, $col2) = array_chunk($staff_members, $row_split);
         //list($col1, $col2) = array_chunk($staff_members, ceil(count($array) / 2));
@@ -139,5 +141,5 @@ class CirculationList extends \PrintableService\PrintableService
         $pdf->Output($filemame, 'I');
 
         return true;
-	}
+    }
 }
