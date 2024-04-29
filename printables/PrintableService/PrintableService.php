@@ -1,5 +1,9 @@
 <?php
 namespace PrintableService;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\View\GenericDataException;
+
 /**
  * PrintableService
  *
@@ -44,7 +48,7 @@ class PrintableService
     }
 
     protected function getStaffData() {
-        $db = \JFactory::getDbo();
+        $db = Factory::getDbo();
 
         #echo '<pre>'; var_dump($db); echo '</pre>'; exit;
 
@@ -53,7 +57,8 @@ class PrintableService
 
         $db->setQuery($q);
         if (!$db->execute($q)) {
-            JError::raiseError( 500, $db->stderr() );
+            #JError::raiseError( 500, $db->stderr() );
+            throw new GenericDataException($db->stderr, 500);
             return false;
         }
 
