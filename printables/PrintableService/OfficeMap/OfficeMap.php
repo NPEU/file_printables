@@ -13,14 +13,16 @@ namespace PrintableService\OfficeMap;
 
  **/
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\View\GenericDataException;
 use setasign\Fpdi\Tcpdf\Fpdi;
 
 class OfficeMap extends \PrintableService\PrintableService
 {
 
-	public function run()
-	{
-        $db = \JFactory::getDbo();
+    public function run()
+    {
+        $db = Factory::getDbo();
 
         // Get the params (not currently needed).
         /*$q = 'SELECT params FROM #__modules WHERE id = 511;';
@@ -42,7 +44,8 @@ class OfficeMap extends \PrintableService\PrintableService
 
         $db->setQuery($q);
         if (!$db->execute($q)) {
-            JError::raiseError( 500, $db->stderr() );
+            #JError::raiseError( 500, $db->stderr() );
+            throw new GenericDataException($db->stderr, 500);
             return false;
         }
 
@@ -204,5 +207,5 @@ class OfficeMap extends \PrintableService\PrintableService
 
 
         return true;
-	}
+    }
 }

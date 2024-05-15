@@ -21,21 +21,21 @@ class OfficeCards extends \PrintableService\PrintableService
         'room' => '#^l(0|1)-\d\d$#'
     ];
 
-	/*=public function __construct()
-	{
-		parent::__construct();
+    /*=public function __construct()
+    {
+        parent::__construct();
 
-	}*/
+    }*/
 
-	public function run()
-	{
+    public function run()
+    {
         $single_room = false;
         if (!empty($this->valid_params['room'])) {
             $single_room = str_replace('l', 'L', str_replace('-', '/', $this->valid_params['room']));
         }
         #echo '<pre>'; var_dump($room); echo '</pre>'; exit;
 
-        
+
 
         $staff_members = $this->getStaffData();
         #echo '<pre>'; var_dump($staff_members); echo '</pre>'; exit;
@@ -108,13 +108,13 @@ class OfficeCards extends \PrintableService\PrintableService
 
             $pdf->addPage();
             $pdf->useTemplate($tpl_idx, 0, 0);
-            
+
             $h_top = 0;
-            
+
             $html1 = $head;
             $html1 .= '<h1 style="font-family: nunitob; font-size: 30pt; line-height: ' . $line_height / 1.5 . 'mm;">' . $room . '</h1>';
             $html1 .= $tail;
-            
+
             $pdf->writeHTMLCell($block_width, '', $block_margin, $h_top, $html1, 0, 0, 0, true, '', false);
             #echo $html1;
 
@@ -134,5 +134,5 @@ class OfficeCards extends \PrintableService\PrintableService
         $pdf->Output($filemame, 'I');
 
         return true;
-	}
+    }
 }
