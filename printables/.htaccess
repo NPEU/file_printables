@@ -2,9 +2,9 @@
 # Single Entry Point
 # ----------------------------------------------------------------------
 <IfModule mod_rewrite.c>
-	Options +FollowSymlinks
-	RewriteEngine On
-	RewriteBase /printables
+    Options +FollowSymlinks
+    RewriteEngine On
+    RewriteBase /printables
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
