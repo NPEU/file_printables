@@ -153,7 +153,10 @@ require_once 'server_vars.php';
 
 require_once '../detect_server.php';
 
-$classname = preg_replace('/[^a-z0-9-]/', '', $_SERVER['PATH_INFO']);
+$pathinfo = pathinfo($_SERVER['SCRIPT_NAME']);
+$path = trim($pathinfo['dirname'], '/');
+$classname = trim(str_replace($path, '', $_SERVER['SCRIPT_URL']), '/');
+$classname = preg_replace('/[^a-z0-9-]/', '', $classname);
 $classname = ucwords(preg_replace('/-/', ' ', $classname));
 $classname = trim(preg_replace('/\s/', '', $classname), '/');
 $classname = '\\PrintableService\\' . $classname . '\\' . $classname;
