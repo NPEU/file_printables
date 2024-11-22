@@ -45,7 +45,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 // It's PARAMOUNT that this file does not find it's way outside the server.
 #require_once('_settings.php');
 
-$params = array();
+$params = [];
 
 // Set up Joomla User stuff:
 define('DS', DIRECTORY_SEPARATOR);

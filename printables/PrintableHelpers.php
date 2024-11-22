@@ -3,9 +3,9 @@
 /**
  * PrintableHelpers
  *
- * Helpers for the Dataable Service
+ * Helpers for the Printables Service
  *
- * @package DataService
+ * @package PrintableService
  * @author akirk
  * @copyright Copyright (c) 2021 NPEU
  * @version 0.1
